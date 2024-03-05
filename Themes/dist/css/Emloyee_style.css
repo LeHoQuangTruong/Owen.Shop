@@ -1,0 +1,59 @@
+﻿
+
+
+
+
+/*Search-Emloyee  CSS*/
+
+.search-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    /*border-radius: 10px;*/
+    position: relative;
+    /*border-top: 2px solid #3c8dbc*/
+}
+
+.search-content .image {
+   
+}
+
+/*.info{
+    display: flex;
+    margin-bottom: 20px;
+}*/
+
+.name {
+    margin-top: 10px;
+}
+
+
+
+.birthday-email .birthday,
+.birthday-email .email {
+    margin: 0 0 6px 0;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+}
+
+.birthday-email .text{
+    margin: 0;
+}
+
+.btn-edit:hover
+{
+    fill: white;
+    background-color: green;
+}
+
+.btn-delete:hover
+{
+    background-color: red;
+    fill: #fff;
+}
+
+
+/*Responsive*/

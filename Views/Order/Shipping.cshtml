@@ -1,0 +1,45 @@
+﻿@model _20T1020637.DomainModels.Shipper
+@{
+    Layout = null;
+}
+
+<div class="modal-dialog">
+    <div class="modal-content">
+        <form action="~/Order/Shipping/@ViewBag.OrderID" method="post" id="shippingForm">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Cập nhật chi tiết đơn hàng</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Người giao hàng:</label>
+                    <select class="form-control" name="ShipperID" id="shipperId">
+                        <option value="0">-- Chọn người giao hàng ---</option>  
+                        @foreach (var item in _20T1020637.BusinessLayers.CommonDataService.ListOfShippers(""))
+                        {
+                            <option value="@item.ShipperID">@item.ShipperName</option>
+                        }
+                    </select>
+                    <div id="errorMessage" style="margin-top: 10px; color: #f00;"><p></p></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-floppy-o"></i> Cập nhật
+                </button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Bỏ qua
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $('#shippingForm').submit(function (e) {
+        if ($('#shipperId').val() == 0) {
+            e.preventDefault();
+            $('#errorMessage>p').text('Vui lòng chọn shipper');
+        }
+    });
+</script>
+

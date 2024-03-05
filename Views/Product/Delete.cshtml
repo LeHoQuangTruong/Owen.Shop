@@ -1,0 +1,61 @@
+﻿@model _20T1020637.DomainModels.Product
+@{
+    ViewBag.Title = $"Xóa mặt hàng {Model.ProductName}";
+}
+
+<div class="box box-primary">
+    <div class="box-header with-border ">
+    </div>
+
+    <div class="box-body">
+        <form class="form-horizontal" action="~/Product/Delete/@Model.ProductID" method="post">
+            <div class="form-group">
+                <label class="control-label col-sm-2">Tên mặt hàng:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@Model.ProductName</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Đơn vị tính:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@Model.Unit</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Giá hàng:</label>
+                <div class="col-sm-10">
+                    <p class="form-control-static">@Model.Price</p>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Ảnh minh họa:</label>
+                <div class="col-sm-10">
+                    <img src="@Model.Photo" class="img img-thumbnail" style="width:110px; height: 140px" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    @if (!_20T1020637.BusinessLayers.ProductDataService.InUsedProduct(Model.ProductID))
+                    {
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Xác nhận hủy đơn hàng này?')">
+                            <i class="fa fa-trash"></i> Đồng ý xóa
+                        </button>
+
+                    }
+
+                    <a class="btn btn-warning" href="~/Product">
+                        <i class="fa fa-ban"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="box-footer text-center">
+    </div>
+
+</div>
+

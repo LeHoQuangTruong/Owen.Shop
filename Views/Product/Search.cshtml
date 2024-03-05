@@ -1,0 +1,72 @@
+﻿@model _20T1020637.Web.Models.ProductSearchOutput
+
+@{
+    Layout = null;
+    int page = ViewBag.Page;
+    int previousPage = page <= 1 ? 1 : page - 1;
+    int nextPage = (page + 1 > Model.PageCount) ? page : page + 1;
+}
+
+
+<p style="margin:10px 0 10px 0">
+    Có <strong>@string.Format("{0:N0}", Model.RowCount)</strong>
+    mặt hàng trong tổng số <strong>@string.Format("{0:N0}", @Model.PageCount) </strong>trang
+</p>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped">
+        <thead>
+            <tr class="bg-primary">
+                <th style="width:80px">Ảnh</th>
+                <th>Tên mặt hàng</th>
+                <th>Tên loại hàng</th>
+                <th>Tên nhà cung cấp</th>
+                <th>Đơn vị tính</th>
+                <th>Giá</th>
+                <th style="width:75px">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Data)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.Photo" class="user-image" alt="Product Image" style="height: 90px; width: 80px; object-fit: cover">
+                    </td>
+                    <td style="vertical-align:middle">@item.ProductName</td>
+                    <td style="vertical-align:middle">@item.CategoryName</td>
+                    <td style="vertical-align:middle">@item.SupplierName</td>
+                    <td style="vertical-align:middle">@item.Unit</td>
+                    <td style="vertical-align:middle">@item.Price.ToString("0.00")</td>
+                    <td class="text-right" style="vertical-align:middle">
+                        <a href="~/Product/Edit/@item.ProductID" class="btn btn-xs btn-flat btn-info">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                        <a href="~/Product/Delete/@item.ProductID" class="btn btn-xs btn-flat btn-danger">
+                            <i class="fa fa-remove"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="box-footer text-center">
+    <ul class="pagination" id="pagination">
+    </ul>
+</div>
+
+<script>
+    $('#pagination').append(`<li class="previous"><a href="javascript:;" onclick="doSearch(@previousPage)"><i class="fa fa-backward"></i></a></li>`)
+        for (let pageNumber of pagination(@Model.Page, @Model.PageCount)) {
+            if (pageNumber === '...') $('#pagination').append(`<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`)
+            else if (pageNumber === @Model.Page) $('#pagination').append(`<li class="pagination active"><a href="#">${pageNumber}</a></li>`)
+            else
+                $('#pagination').append(`<li><a href="javascript:;" onclick="doSearch(${pageNumber})">${pageNumber}</a></li>`)
+    }
+    $('#pagination').append(`<li class="next"><a href="javascript:;" onclick="doSearch(@nextPage)"><i class="fa fa-forward"></i></a></li>`)
+</script>
+
+
+
+

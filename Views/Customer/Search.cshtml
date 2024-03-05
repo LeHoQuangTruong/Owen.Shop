@@ -1,0 +1,69 @@
+﻿@model _20T1020637.Web.Models.CustomerSearchOutput
+
+@{
+    Layout = null;
+    int page = ViewBag.Page;
+    int previousPage = page <= 1 ? 1 : page - 1;
+    int nextPage = (page + 1 > Model.PageCount) ? page : page + 1;
+}
+
+
+<p>Có <strong>@string.Format("{0:N0}", Model.RowCount)</strong> khách hàng trong tổng số <strong>@string.Format("{0:N0}", Model.PageCount) </strong>trang</p>
+<table class="table table-bordered table-hover table-striped">
+    <thead>
+        <tr class="bg-primary">
+            <th>Tên khách hàng</th>
+            <th>Tên liên hệ</th>
+            <th>Địa chỉ</th>
+            <th>Quốc gia</th>
+            <th>Thành phố</th>
+            <th>Mã bưu chính</th>
+            <th>Email</th>
+            @*<th>Mật khẩu</th>*@
+            <th>
+
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td>@item.CustomerName</td>
+                <td>@item.ContactName</td>
+                <td>@item.Address</td>
+                <td>@item.Country</td>
+                <td>@item.City</td>
+                <td>@item.PostalCode</td>
+                <td>@item.Email</td>
+                @*<td>123456</td>*@
+                <td class="text-right" style="width: 90px">
+                    <a href="~/Customer/Edit/@item.CustomerID" class="btn btn-sm btn-success" title="Sửa">
+                        <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                    <a href="~/Customer/Delete/@item.CustomerID" class="btn btn-sm btn-danger" title="Xoá">
+                        <i class="glyphicon glyphicon-trash "></i>
+                    </a>
+                </td>
+            </tr>
+
+        }
+
+    </tbody>
+</table>
+<div class="text-center">
+    <ul class="pagination" id="pagination">
+    </ul>
+</div>
+
+<script>
+    $('#pagination').append(`<li class="previous"><a href="javascript:;" onclick="doSearch(@previousPage)"><i class="fa fa-backward"></i></a></li>`)
+        for (let pageNumber of pagination(@Model.Page, @Model.PageCount)) {
+            if (pageNumber === '...') $('#pagination').append(`<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`)
+            else if (pageNumber === @Model.Page) $('#pagination').append(`<li class="pagination active"><a href="#">${pageNumber}</a></li>`)
+            else
+                $('#pagination').append(`<li><a href="javascript:;" onclick="doSearch(${pageNumber})">${pageNumber}</a></li>`)
+    }
+    $('#pagination').append(`<li class="next"><a href="javascript:;" onclick="doSearch(@nextPage)"><i class="fa fa-forward"></i></a></li>`)
+</script>
+

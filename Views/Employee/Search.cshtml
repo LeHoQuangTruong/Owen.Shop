@@ -1,0 +1,117 @@
+﻿@model _20T1020637.Web.Models.EmployeeSearchOutput
+
+@{
+    Layout = null;
+    int page = ViewBag.Page;
+    int previousPage = page <= 1 ? 1 : page - 1;
+    int nextPage = (page + 1 > Model.PageCount) ? page : page + 1;
+}
+
+<p>Có <strong>@string.Format("{0:N0}", Model.RowCount)</strong> 
+    nhân viên trong tổng số <strong>@string.Format("{0:N0}", @Model.PageCount) </strong>trang</p>
+
+<div class="box box-primary" style="margin-top: 20px;">
+    <div class="box-body">
+        <div class="row">
+            @foreach (var item in Model.Data)
+            {
+                <div class="col-sm-4 " style="height: 400px;margin-bottom: 20px;">
+                    <div class="search-content box box-primary "
+                         style="overflow: hidden;
+                                    position: relative;
+                                    padding: 10px 16px;
+                                    border-top-color: #F2762E;
+                                    ">
+
+                        <div class="text-right" style="position: absolute; top: 14px; right: 8px">
+                            <a href="~/Employee/Edit/@item.EmployeeID"
+                               class="btn btn-sm btn-edit text-black"
+                               title="Sửa"
+                               style="border: 1px solid;">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                            <a href="~/Employee/Delete/@item.EmployeeID"
+                               class="btn btn-sm btn-delete text-black"
+                               title="Xoá"
+                               style="border: 1px solid">
+                                <i class="glyphicon glyphicon-trash"></i>
+                            </a>
+                        </div>
+                        <div class="image" style="padding: 0; margin: 16px auto 10px;">
+                            <img src="@item.Photo"
+                                 alt="image"
+                                 class="img-thumbnail employee-img"
+                                 style="width: 110px; height: 140px; object-fit: cover;margin: 0;" />
+                        </div>
+                        <div class="info" style="max-height: 300px">
+                            <h2 class="name" style="margin: 10px auto; text-align: center; font-size: 24px;">@item.LastName @item.FirstName</h2>
+                            <div class="birthday-email" style="margin-top: 20px">
+                                <div class="birthday">
+                                    <strong style="margin-right: 6px">
+                                        <i class="glyphicon glyphicon-calendar"></i>
+                                    </strong>
+                                    <p class="text"> @item.BirthDate</p>
+                                </div>
+                                <div class="email">
+                                    <strong style="margin-right: 6px">
+                                        <i class="glyphicon glyphicon-envelope"></i>
+                                    </strong>
+                                    <p class="text">@item.Email </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="notes">
+                            <strong style="margin-right: 6px;
+
+                                                ">
+                                Chú thích:
+                            </strong>
+                            <p style="display: -webkit-box;
+                                            -webkit-line-clamp: 4;
+                                            -webkit-box-orient: vertical;
+                                            overflow: hidden;
+                                            margin: 0;
+                                            ">
+                                @item.Notes
+
+                            </p>
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<div class="text-center">
+    <ul class="pagination" id="pagination">
+    </ul>
+</div>
+
+<script>
+    $('#pagination').append(`<li class="previous"><a href="javascript:;" onclick="doSearch(@previousPage)"><i class="fa fa-backward"></i></a></li>`)
+        for (let pageNumber of pagination(@Model.Page, @Model.PageCount)) {
+            if (pageNumber === '...') $('#pagination').append(`<li class="page-item disabled"><a class="page-link" href="#">...</a></li>`)
+            else if (pageNumber === @Model.Page) $('#pagination').append(`<li class="pagination active"><a href="#">${pageNumber}</a></li>`)
+            else
+                $('#pagination').append(`<li><a href="javascript:;" onclick="doSearch(${pageNumber})">${pageNumber}</a></li>`)
+    }
+    $('#pagination').append(`<li class="next"><a href="javascript:;" onclick="doSearch(@nextPage)"><i class="fa fa-forward"></i></a></li>`)
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
